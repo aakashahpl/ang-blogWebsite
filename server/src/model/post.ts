@@ -17,6 +17,6 @@ const postSchema = new mongoose.Schema({
 
 });
 
-const postModel = mongoose.model('categories', postSchema);
+const postModel = mongoose.model("posts", postSchema);
 
 export default postModel;

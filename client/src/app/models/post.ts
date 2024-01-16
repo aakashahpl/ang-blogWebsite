@@ -5,7 +5,6 @@ export interface Post {
         categoryId:string,
         category:string
     }
-
     postImgPath:string,
     excerpt:string,
     content:string,
@@ -13,6 +12,4 @@ export interface Post {
     views:number,
     status:string,
     createdAt:Date,
-
-
 }

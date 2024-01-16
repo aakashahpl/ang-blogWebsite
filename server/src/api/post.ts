@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-route3.post("/save",upload.single("image"),(req,res)=>{
+route3.post("/save",upload.single("postImg"),(req,res)=>{
   try {
     const postObject = req.body;
     console.log(postObject);
