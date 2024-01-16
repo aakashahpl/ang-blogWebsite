@@ -65,6 +65,27 @@ export class MyBackendService {
     });
   }
 
+deleteData(id:string): Observable<any> {
+  const axiosConfig: AxiosRequestConfig = {
+    method: 'delete',
+    url: `${this.backendUrl}/delete/${id}`,
+    headers: this.getHeaders(),
+    // other configurations as needed
+  };
+
+  return new Observable((observer) => {
+    axios(axiosConfig)
+      .then((response) => {
+        observer.next(response.data);
+        observer.complete();
+      })
+      .catch((error) => {
+        observer.error(error);
+      });
+  });
+}
+
+
   // Utility function to get headers with JWT token
   private getHeaders(): { [key: string]: string } {
     const headers: { [key: string]: string } = {
