@@ -14,11 +14,14 @@ export class NewPostComponent implements OnInit {
   imgSrc: any = './assets/image placeholder.jpg';
   selectedImg: any;
   postForm: FormGroup;
+  Categories: any[] | undefined;
 
   ngOnInit(): void {
-    const jwtToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4';
-    // this.myBackendService.setJwtToken(jwtToken);
+    this.MyBackendService.getCategoryData().subscribe((data) => {
+      this.Categories = data.categories;   
+      
+    });
+
   }
 
   constructor(
@@ -31,7 +34,7 @@ export class NewPostComponent implements OnInit {
       permalink: ['', Validators.required],
       excerpt: ['', [Validators.required, Validators.minLength(10)]],
       category: ['', Validators.required],
-      postImg: ['', Validators.required],
+      postImg: [null, Validators.required],
       content: ['', Validators.required],
     });
   }
@@ -43,26 +46,55 @@ export class NewPostComponent implements OnInit {
   onTitleChanged($event: any) {
     const title = $event.target.value;
     this.permaLink = title.replace(/\s/g, '-');
+
+    
   }
   showPreview($event: any) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.imgSrc = e.target?.result;
-    };
-    reader.readAsDataURL($event.target.files[0]);
-    this.selectedImg = $event.target.files[0];
+    // const reader = new FileReader();
+    // reader.onload = (e) => {
+    //   this.imgSrc = e.target?.result;
+    // };
+    // reader.readAsDataURL($event.target.files[0]);
+    // this.selectedImg = $event.target.files[0];
+
+    const files = $event.target.files;
+    
+
+    if (files && files.length > 0) {
+      const file = files[0];
+  
+      this.postForm.patchValue({
+        postImg: file
+      });
+  
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imgSrc = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+  
+      // Clear the file input
+      this.postForm.get('postImg')?.setValue(null);
+  
+      this.selectedImg = file; // Save the selected image file
+    }
   }
 
   onSubmit() {
-    console.log(this.postForm.value);
+
+    let splitted=this.postForm.value.category.split('-');
+
+
+
+    console.log(this.postForm.value)
     const postData: Post = {
       title: this.postForm.value.title,
-      permalink: this.postForm.value.permalink,
+      permalink: this.permaLink,
       category: {
-        categoryId: '',
-        category: '',
+        categoryId: splitted[0],
+        category: splitted[1],
       },
-      postImgPath: this.postForm.value.postImg,
+      postImg: this.selectedImg,
       excerpt: this.postForm.value.excerpt,
       content: this.postForm.value.content,
       isFeatured: false,
@@ -70,7 +102,7 @@ export class NewPostComponent implements OnInit {
       status: 'new',
       createdAt: new Date(),
     };
-    console.log(postData);
+    console.log("Before posting ->",postData);
     this.MyBackendService.postData(postData).subscribe((data) => {
       console.log('Data:', data);
       this.toastr.success('Data inserted successfully ..!');

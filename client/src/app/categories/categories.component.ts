@@ -22,27 +22,41 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
     // const jwtToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4"
     // // this.myBackendService.setJwtToken(jwtToken);
+    this.initialFetchData()
+  }
 
-    this.MyBackendService.getData().subscribe((data: any) => {
+
+
+  initialFetchData(){
+    this.MyBackendService.getCategoryData().subscribe((data: any) => {
       if (data && data.categories) {
         this.categoryArray = data.categories;
         console.log(this.categoryArray);
         //*-*
       }
     });
+    
+
   }
+
+
+  
+
+
 
   onSubmit(formData: any) {
     let categoryData: Category = {
       category: formData.value.category,
       status: true,
     };
-    // to modify the local array and append the new elemet to it
-    this.categoryArray?.push(categoryData);
 
-    this.MyBackendService.postData(categoryData).subscribe((data) => {
+    this.MyBackendService.postCategoryData(categoryData).subscribe((data) => {
       this.toastr.success('Data inserted successfully ..!');
     });
+
+    this.initialFetchData()
+
+
 
     formData.reset();
   }
@@ -53,13 +67,12 @@ export class CategoriesComponent implements OnInit {
   }
 
   onDelete(id:string){
-    console.log("id:", id);
-    //to modify the local array and remove the element from it
-    this.categoryArray = this.categoryArray?.filter((category) => category._id !== id);
 
 
     this.MyBackendService.deleteData(id).subscribe((data)=>{
-      this.toastr.success("Data deleted ..!")
+      this.toastr.success("Data deleted")
+
+      this.initialFetchData()
 
     })
     

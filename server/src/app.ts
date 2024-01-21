@@ -16,7 +16,7 @@ app.use(passport.initialize());
 app.use(cors());
 app.use("/", route1);
 app.use("/category", route2);
-app.use("/posts", route3);
+app.use("/post", route3);
 
 connectToDB();
 const PORT = process.env.PORT||3001;

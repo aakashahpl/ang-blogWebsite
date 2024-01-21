@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class MyBackendService {
-  private backendUrl = 'http://localhost:3001/category';
+  private categorybackendUrl = 'http://localhost:3001/category';
+  private postBackendUrl = 'http://localhost:3001/post';
   private jwtToken: string =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4';
 
@@ -23,10 +24,10 @@ export class MyBackendService {
   // }
 
   // Example of a GET request with JWT token
-  getData(): Observable<any> {
+  getCategoryData(): Observable<any> {
     const axiosConfig: AxiosRequestConfig = {
       method: 'get',
-      url: `${this.backendUrl}/fetch`,
+      url: `${this.categorybackendUrl}/fetch`,
       headers: this.getHeaders(),
       // other configurations as needed
     };
@@ -44,10 +45,31 @@ export class MyBackendService {
   }
 
   // Example of a POST request with JWT token
+  postCategoryData(payload: any): Observable<any> {
+    const axiosConfig: AxiosRequestConfig = {
+      method: 'post',
+      url: `${this.categorybackendUrl}/save`,
+      data: payload,
+      headers: this.getHeaders(),
+      // other configurations as needed
+    };
+
+    return new Observable((observer) => {
+      axios(axiosConfig)
+        .then((response) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
+  }
+
   postData(payload: any): Observable<any> {
     const axiosConfig: AxiosRequestConfig = {
       method: 'post',
-      url: `${this.backendUrl}/save`,
+      url: `${this.postBackendUrl}/save`,
       data: payload,
       headers: this.getHeaders(),
       // other configurations as needed
@@ -68,7 +90,7 @@ export class MyBackendService {
 deleteData(id:string): Observable<any> {
   const axiosConfig: AxiosRequestConfig = {
     method: 'delete',
-    url: `${this.backendUrl}/delete/${id}`,
+    url: `${this.categorybackendUrl}/delete/${id}`,
     headers: this.getHeaders(),
     // other configurations as needed
   };
