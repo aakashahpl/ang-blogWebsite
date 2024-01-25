@@ -6,7 +6,7 @@ const route3 = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '../uploads/');
+    cb(null, 'server/src/uploads');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-route3.post("/save",upload.single("image"),(req,res)=>{
+route3.post("/save",upload.single("postImg"),(req,res)=>{
   try {
     const postObject = req.body;
     console.log(postObject);

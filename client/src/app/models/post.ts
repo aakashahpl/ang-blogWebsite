@@ -3,16 +3,13 @@ export interface Post {
     permalink:string,
     category:{
         categoryId:string,
-        category:string
+        category:string,
     }
-
-    postImgPath:string,
+    postImg:string,
     excerpt:string,
     content:string,
     isFeatured:boolean,
     views:number,
     status:string,
     createdAt:Date,
-
-
 }

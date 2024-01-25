@@ -1,8 +1,8 @@
 <div class="container">
     <div class="card">
         <div class="col-md-12 bg-secondary-theme p-5 shadow-effect">
-            <h3 class="text-center text-theme-primary">New Categories</h3>
-            <p class="text-center mb-5">You can add new categories from here...!</p>
+            <h3 class="text-center text-theme-primary">{{formStatus}} Categories</h3>
+            <p class="text-center mb-5">You can {{formStatus}} new categories from here...!</p>
 
             <form action="" class="form-inline text-center" #categoryForm='ngForm' (ngSubmit)="onSubmit(categoryForm)">
                 <div class="form-group col-md-10">
@@ -12,7 +12,7 @@
                     placeholder="Add new categories" 
                     name="category" 
                     #newCategory='ngModel'
-                    ngModel
+                    [(ngModel)]="formCategory"
                     required
                     [ngClass]="{'is-invalid': newCategory.touched && newCategory.invalid}"
                     >
@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-info mb-2 btn-theme" [disabled]="categoryForm.invalid">Add category</button>
+                <button class="btn btn-block btn-info mb-2 btn-theme" [disabled]="categoryForm.invalid">{{formStatus}} category</button>
                 </div>
 
             </form>
@@ -41,8 +41,15 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody> 
+                            <tr *ngFor="let category of categoryArray;let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{category.category }}</td>
+
+                                <td>
+                                    <button class="btn btn-sm btn-warning" (click)="onEdit(category.category)">Edit</button>
+                                    <button class="btn btn-sm btn-danger ml-2" (click)="onDelete(category._id)">Delete</button>
+                                </td>
 
                             </tr>
                         </tbody>
