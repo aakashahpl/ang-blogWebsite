@@ -32,11 +32,12 @@
                             <label>Permalink</label>
                             <input 
                             type="text" 
-                            lass="form-control"  
+                            class="form-control"  
                             [(ngModel)]="permaLink" 
                             name="permaLink"    
                             FormControlName="permalink" disabled
-                            [ngModelOptions]="{standalone: true}">
+                            [ngModelOptions]="{standalone: true}"
+                            >
 
                             <div *ngIf="fc['permalink'].errors?.['required']">
                                 <div class="alert alert-danger" *ngIf="fc['permalink'].touched && fc['permalink'].invalid">PermaLink is required.</div>
@@ -45,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <label>Excerpt</label>
-                            <textarea cols="30" rows="10" class="form-control" formArrayName="excerpt"></textarea>
+                            <textarea cols="30" rows="10" class="form-control" formControlName="excerpt"></textarea>
                             <div *ngIf="fc['excerpt'].errors?.['required']">
                                 <div class="alert alert-danger" *ngIf="fc['excerpt'].touched && fc['excerpt'].invalid">Excerpt is required.</div>
                             </div>
@@ -65,21 +66,20 @@
                     <label>Please select a post category</label>    
                     <select name="" id="" class="form-control" formControlName="category">
                         <option value="" disabled>Please select a category</option>
+                        <option *ngFor="let category of Categories" value="{{category._id}}-{{category.category}}" >{{category.category}}</option>
                     </select>
 
                     <div *ngIf="fc['category'].errors?.['required']">
                         <div class="alert alert-danger" *ngIf="fc['category'].touched && fc['category'].invalid">Please Select a post category.</div>
                     </div>
 
-
-
-
                 </div>
 
                 <div class="form-group">
                     <label>Post Image</label>
                     <img [src]="imgSrc" class="form-control img-fluid img-preview">
-                    <input type="file" class="form-control" accept="image/*" (change)="showPreview($event)" formControlName="postImg">
+                    <!-- removed form control name here  formControlName="postImg"-->
+                    <input type="file" class="form-control" accept="image/*" (change)="showPreview($event)" >
                     <div *ngIf="fc['postImg'].errors?.['required']">
                         <div class="alert alert-danger" *ngIf="fc['postImg'].touched && fc['postImg'].invalid">Post image is required.</div>
                     </div>

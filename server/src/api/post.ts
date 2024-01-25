@@ -6,16 +6,26 @@ import verifyToken from "./auth";
 const route3 = express.Router();
 
 const storage = multer.diskStorage({
+<<<<<<< HEAD
     destination: (req, file, cb) => {
         cb(null, "src/uploads");
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + "-" + file.originalname);
     },
+=======
+  destination: (req, file, cb) => {
+    cb(null, 'server/src/uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+>>>>>>> origin/main
 });
 
 const upload = multer({ storage: storage });
 
+<<<<<<< HEAD
 route3.post("/save", upload.single("postImg"), (req, res) => {
     try {
         const postObject = req.body;
@@ -32,6 +42,25 @@ route3.post("/save", upload.single("postImg"), (req, res) => {
         });
     }
 });
+=======
+route3.post("/save",upload.single("postImg"),(req,res)=>{
+  try {
+    const postObject = req.body;
+    console.log(postObject);
+    const newPost = new postModel(postObject);
+    newPost.save();
+    return res.status(200).json({
+      message : "post successfully saved",
+    })
+    
+  } catch (error) {
+    return res.status(200).json({
+      message: "post not saved ",
+      error:error.message
+    })
+  }
+})
+>>>>>>> origin/main
 
 route3.get("/fetch", verifyToken, async (req, res) => {
     try {
