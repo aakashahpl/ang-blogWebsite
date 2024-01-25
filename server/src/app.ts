@@ -14,15 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
-<<<<<<< HEAD
 app.use("/",route1);
 app.use("/category",route2);
 app.use("/post/",route3);
-=======
-app.use("/", route1);
-app.use("/category", route2);
-app.use("/post", route3);
->>>>>>> origin/main
 
 connectToDB();
 const PORT = process.env.PORT||3001;
