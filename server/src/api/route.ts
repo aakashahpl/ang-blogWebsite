@@ -31,12 +31,21 @@ route1.post('/login', async (req, res, next) => {
     });
     passport.authenticate('local', (err, user, info) => {
       const { _id, username } = user;
+      console.log(user);
+      
+      //if user is undefined 
+      if(!_id){
+        res.status(400).json({message:"incorrect username or password"});
+      }
+      else{
       console.log(_id);
       const accessToken = jwt.sign(
         { user: {_id,username} },
         process.env.ACCESS_TOKEN_SECRET
       );
+
       res.json({ accessToken: accessToken });
+      } 
     })(req, (res));
   } catch (error: any) {
     console.log(`unable to login : ${error.message}`);
