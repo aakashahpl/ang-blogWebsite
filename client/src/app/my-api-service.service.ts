@@ -8,20 +8,14 @@ import { Observable } from 'rxjs';
 export class MyBackendService {
   private categorybackendUrl = 'http://localhost:3001/category';
   private postBackendUrl = 'http://localhost:3001/post';
-  private jwtToken: string =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4';
+  private loginurl = 'http://localhost:3001/login';
+  private jwtTokenKey = 'jwtToken';
+  private jwtToken: string = '';
+  // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4';
 
-  constructor() {}
-
-  // Set JWT token for authentication
-  // setJwtToken(token: string): void {
-  //   this.jwtToken = token;
-  // }S
-
-  // Clear JWT token (logout)
-  // clearJwtToken(): void {
-  //   this.jwtToken = null;
-  // }
+  constructor() {
+    this.jwtToken = localStorage.getItem(this.jwtTokenKey) || '';
+  }
 
   // Example of a GET request with JWT token
   getCategoryData(): Observable<any> {
@@ -87,26 +81,49 @@ export class MyBackendService {
     });
   }
 
-deleteData(id:string): Observable<any> {
-  const axiosConfig: AxiosRequestConfig = {
-    method: 'delete',
-    url: `${this.categorybackendUrl}/delete/${id}`,
-    headers: this.getHeaders(),
-    // other configurations as needed
-  };
+  deleteData(id: string): Observable<any> {
+    const axiosConfig: AxiosRequestConfig = {
+      method: 'delete',
+      url: `${this.categorybackendUrl}/delete/${id}`,
+      headers: this.getHeaders(),
+      // other configurations as needed
+    };
 
-  return new Observable((observer) => {
-    axios(axiosConfig)
+    return new Observable((observer) => {
+      axios(axiosConfig)
+        .then((response) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  setJwtKey(formValues: any) {
+    axios
+      .post(this.loginurl, formValues, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
-        observer.next(response.data);
-        observer.complete();
+        if (response.data && response.data.accessToken) {
+          this.jwtToken = response.data.accessToken;
+          localStorage.setItem(this.jwtTokenKey, this.jwtToken);
+        }
       })
       .catch((error) => {
-        observer.error(error);
+        console.log(error);
       });
-  });
-}
+  }
 
+  clearJwtToken() {
+    // Clear the token from localStorage when the user logs out
+    this.jwtToken = '';
+    localStorage.removeItem(this.jwtTokenKey);
+  }
 
   // Utility function to get headers with JWT token
   private getHeaders(): { [key: string]: string } {
