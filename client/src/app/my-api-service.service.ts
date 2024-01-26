@@ -16,7 +16,7 @@ export class MyBackendService {
   // Set JWT token for authentication
   // setJwtToken(token: string): void {
   //   this.jwtToken = token;
-  // }S
+  // }
 
   // Clear JWT token (logout)
   // clearJwtToken(): void {
@@ -111,7 +111,7 @@ deleteData(id:string): Observable<any> {
   // Utility function to get headers with JWT token
   private getHeaders(): { [key: string]: string } {
     const headers: { [key: string]: string } = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     };
 
     if (this.jwtToken) {

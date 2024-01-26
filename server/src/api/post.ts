@@ -7,10 +7,13 @@ const route3 = express.Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
+        console.log("inside multer code ");
         cb(null, "src/uploads");
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname);
+        const fileName = Date.now() + "-" + file.originalname;
+        req.body.postImgName = fileName;
+        cb(null,fileName );
     },
 });
 
@@ -18,6 +21,10 @@ const upload = multer({ storage: storage });
 
 route3.post("/save", upload.single("postImg"), (req, res) => {
     try {
+        if (!req.file) {
+            console.log("no file upload");
+        }
+        
         const postObject = req.body;
         console.log(postObject);
         const newPost = new postModel(postObject);
