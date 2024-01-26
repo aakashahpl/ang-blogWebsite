@@ -38,7 +38,6 @@ route2.get('/fetch',verifyToken, async (req, res) => {
   try {
     const decodedToken:any = req.user;
     const userId = decodedToken.user._id;
-    console.log(userId);
     const categories = await categoryModel.find({userId:userId});
 
     return res.status(200).json({ categories });
