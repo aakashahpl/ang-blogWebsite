@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import categoryModel from './categories';
+import userModel from './user';
 const postSchema = new mongoose.Schema({
     title : String,
     postImg : Object,
@@ -14,7 +15,8 @@ const postSchema = new mongoose.Schema({
     isFeatured:Boolean,
     views:Number,
     status:String,
-    createdAt:Date
+    createdAt:Date,
+    userId:{type:mongoose.Types.ObjectId,ref:userModel}
 
 });
 
