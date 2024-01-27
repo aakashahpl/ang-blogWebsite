@@ -13,9 +13,17 @@ export class MyBackendService {
   private jwtToken: string = '';
   // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4';
 
-  constructor() {
-    this.jwtToken = localStorage.getItem(this.jwtTokenKey) || '';
-  }
+  constructor() {}
+
+  // Set JWT token for authentication
+  // setJwtToken(token: string): void {
+  //   this.jwtToken = token;
+  // }
+
+  // Clear JWT token (logout)
+  // clearJwtToken(): void {
+  //   this.jwtToken = null;
+  // }
 
   // Example of a GET request with JWT token
   getCategoryData(): Observable<any> {
@@ -128,7 +136,7 @@ export class MyBackendService {
   // Utility function to get headers with JWT token
   private getHeaders(): { [key: string]: string } {
     const headers: { [key: string]: string } = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     };
 
     if (this.jwtToken) {
