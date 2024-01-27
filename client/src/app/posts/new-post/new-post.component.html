@@ -79,7 +79,7 @@
                     <label>Post Image</label>
                     <img [src]="imgSrc" class="form-control img-fluid img-preview">
                     <!-- removed form control name here  formControlName="postImg"-->
-                    <input type="file" class="form-control" accept="image/*" (change)="showPreview($event)" >
+                    <input type="file" name='img' class="form-control" accept="image/*" (change)="showPreview($event)" >
                     <div *ngIf="fc['postImg'].errors?.['required']">
                         <div class="alert alert-danger" *ngIf="fc['postImg'].touched && fc['postImg'].invalid">Post image is required.</div>
                     </div>
