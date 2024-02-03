@@ -58,4 +58,32 @@ route3.get("/fetch", verifyToken, async (req, res) => {
     }
 });
 
+route3.put("/update/:_id",verifyToken,async(req,res)=>{
+    try {
+        const post = await postModel.findById(req.params._id);
+        if(!post){
+            return res.status(401).json({error:"No post with the corresponding _id"})
+        }
+        for(const key in req.body){
+            post[key] = req.body[key];
+        }
+        await post.save();
+        res.status(200).json({message:"Post updated successfully"});
+        
+    } catch (error) {
+        res.status(500).json({error:"internal server error"});
+        
+    }
+})
+
+route3.delete("/delete/:_id",verifyToken,async(req,res)=>{
+    try {
+        const deletePost = await postModel.findByIdAndDelete(req.params._id);
+        return res.status(200).json({message : "post successfully deleted"});
+        
+    } catch (error) {
+       res.status(500).json({error:"failed to delete post"}) ;
+    }
+})
+
 export default route3;
