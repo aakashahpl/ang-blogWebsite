@@ -2,7 +2,7 @@ import express from 'express';
 import verifyToken from './auth';
 import categoryModel from '../model/categories';
 
-const route2 = express.Router();
+const Router = express.Router();
 
 
 interface decodedToken {
@@ -13,7 +13,7 @@ interface decodedToken {
   iat:Number;
 }
 
-route2.post('/save', verifyToken, async (req, res) => {
+Router.post('/save', verifyToken, async (req, res) => {
   try {
     const decodedToken:any= req.user;
     const category = {
@@ -34,7 +34,7 @@ route2.post('/save', verifyToken, async (req, res) => {
   }
 });
 
-route2.get('/fetch',verifyToken, async (req, res) => {
+Router.get('/fetch',verifyToken, async (req, res) => {
   try {
     const decodedToken:any = req.user;
     const userId = decodedToken.user._id;
@@ -48,7 +48,7 @@ route2.get('/fetch',verifyToken, async (req, res) => {
   }
 });
 
-route2.put('/update/:_id', verifyToken, async (req, res) => {
+Router.put('/update/:_id', verifyToken, async (req, res) => {
   try {
     console.log(req.params._id);
     const updateCategory = await categoryModel.findOneAndUpdate(
@@ -67,7 +67,7 @@ route2.put('/update/:_id', verifyToken, async (req, res) => {
   }
 });
 
-route2.delete('/delete/:_id', verifyToken, async (req, res) => {
+Router.delete('/delete/:_id', verifyToken, async (req, res) => {
   const deleteCategory = await categoryModel.findByIdAndDelete({
     _id: req.params._id,
   });
@@ -76,4 +76,4 @@ route2.delete('/delete/:_id', verifyToken, async (req, res) => {
     .json({ movie: deleteCategory, message: 'Category deleted successfully' });
 });
 
-export default route2;
+export default Router;

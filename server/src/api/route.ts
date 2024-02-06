@@ -3,9 +3,9 @@ import user from '../model/user';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 
-const route1 = express.Router();
+const Router = express.Router();
 
-route1.post('/register', async (req, res) => {
+Router.post('/register', async (req, res) => {
   try {
     console.log(req.body);
     await user.register({ username: req.body.username }, req.body.password);
@@ -23,7 +23,7 @@ route1.post('/register', async (req, res) => {
   }
 });
 
-route1.post('/login', async (req, res, next) => {
+Router.post('/login', async (req, res, next) => {
   try {
     const userVariable = new user({
       username: req.body.username,
@@ -54,6 +54,6 @@ route1.post('/login', async (req, res, next) => {
   }
 });
 
-route1.get('/logout', (req, res) => {});
+Router.get('/logout', (req, res) => {});
 
-export default route1;
+export default Router;

@@ -3,7 +3,7 @@ import postModel from "../model/post";
 import multer from "multer";
 import verifyToken from "./auth";
 
-const route3 = express.Router();
+const Router = express.Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-route3.post("/save",verifyToken, upload.single("postImg"), (req, res) => {
+Router.post("/save",verifyToken, upload.single("postImg"), (req, res) => {
     try {
         if (!req.file) {
             console.log("no file upload");
@@ -42,7 +42,7 @@ route3.post("/save",verifyToken, upload.single("postImg"), (req, res) => {
     }
 });
 
-route3.get("/fetch", verifyToken, async (req, res) => {
+Router.get("/fetch", verifyToken, async (req, res) => {
     try {
         const decodedToken: any = req.user;
         const userId = decodedToken.user._id;
@@ -58,7 +58,7 @@ route3.get("/fetch", verifyToken, async (req, res) => {
     }
 });
 
-route3.put("/update/:_id",verifyToken,async(req,res)=>{
+Router.put("/update/:_id",verifyToken,async(req,res)=>{
     try {
         const post = await postModel.findById(req.params._id);
         if(!post){
@@ -76,7 +76,7 @@ route3.put("/update/:_id",verifyToken,async(req,res)=>{
     }
 })
 
-route3.delete("/delete/:_id",verifyToken,async(req,res)=>{
+Router.delete("/delete/:_id",verifyToken,async(req,res)=>{
     try {
         const deletePost = await postModel.findByIdAndDelete(req.params._id);
         return res.status(200).json({message : "post successfully deleted"});
@@ -86,4 +86,4 @@ route3.delete("/delete/:_id",verifyToken,async(req,res)=>{
     }
 })
 
-export default route3;
+export default Router;
