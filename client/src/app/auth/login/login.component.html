@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <div class="text-center">
                         <h3 class="text-theme-primary">Login</h3>
-                        <p>Please login to your admin accoutn to post a new blog</p>
+                        <p>Please login to your admin account to post a new blog</p>
                     </div>
 
                     <form #loginForm =ngForm (ngSubmit)="onSubmit(loginForm.value)" >
@@ -27,7 +27,7 @@
 
                         <div class="form-group">
                             <input type="password" class="form-control" placeholder="Password"  name="password" #Password='ngModel' 
-                            ngModel required [ngClass]="{'is-invalid':Password.touched && Password.invalid}"> >
+                            ngModel required [ngClass]="{'is-invalid':Password.touched && Password.invalid}"> 
                         
                             <div class="alert alert-danger" *ngIf="Password.touched && Password.invalid">Password cannot be empty</div>
                         

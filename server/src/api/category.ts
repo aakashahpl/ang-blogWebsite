@@ -37,6 +37,8 @@ route2.post('/save', verifyToken, async (req, res) => {
 route2.get('/fetch',verifyToken, async (req, res) => {
   try {
     const decodedToken:any = req.user;
+    console.log("sdfs");
+    console.log(decodedToken);
     const userId = decodedToken.user._id;
     const categories = await categoryModel.find({userId:userId});
 

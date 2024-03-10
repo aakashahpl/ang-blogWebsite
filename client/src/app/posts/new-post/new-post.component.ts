@@ -192,7 +192,7 @@ export class NewPostComponent implements OnInit {
   onSubmit() {
 
     let splitted=this.postForm.value.category.split('-');
-    console.log(this.postForm.value)
+
     const postData: Post = {
       title: this.postForm.value.title,
       permalink: this.permaLink,
@@ -213,5 +213,6 @@ export class NewPostComponent implements OnInit {
       console.log('Data:', data);
       this.toastr.success('Data inserted successfully ..!');
     });
+    this.postForm.reset();
   }
 }
