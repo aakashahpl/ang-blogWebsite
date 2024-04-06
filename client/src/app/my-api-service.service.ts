@@ -15,7 +15,7 @@ export class MyBackendService {
   userEmailKey: string = 'userEmail';
   private userEmail: string = '';
   loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+  isLoggedInGuard:boolean=false;
   // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4
   constructor(private router: Router) {
     this.jwtToken = localStorage.getItem(this.jwtTokenKey) || '';
@@ -157,6 +157,7 @@ export class MyBackendService {
           localStorage.setItem(this.jwtTokenKey, this.jwtToken);
           localStorage.setItem(this.userEmailKey, this.userEmail);
           this.loggedIn.next(true);
+          this.isLoggedInGuard=true;
            this.router.navigate(['/']);
         }
       })
@@ -173,6 +174,7 @@ export class MyBackendService {
     localStorage.removeItem(this.userEmailKey);
     this.router.navigate(['/login']);
     this.loggedIn.next(false);
+    this.isLoggedInGuard=false;
   }
 
   isLoggedIn() {

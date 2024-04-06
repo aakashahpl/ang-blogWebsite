@@ -13,19 +13,18 @@ export class HeaderComponent implements OnInit {
   
 
   ngOnInit(): void {
-    // this.userEmail=localStorage.getItem(this.MyBackendService.userEmailKey) || '';
-    // console.log(this.userEmail);
-    // this.isLoggedIn$ = this.MyBackendService.isLoggedIn();
+    this.userEmail=localStorage.getItem(this.MyBackendService.userEmailKey) || '';
+    this.isLoggedIn$ = this.MyBackendService.isLoggedIn();
 
         // Fetch userEmail from local storage
-        this.isLoggedIn$ = this.MyBackendService.isLoggedIn();
-        this.isLoggedIn$.subscribe(isLoggedIn => {
-          if (isLoggedIn) {
-            // Fetch userEmail from local storage after the user logs in
-            this.userEmail = localStorage.getItem(this.MyBackendService.userEmailKey) || '';
-            console.log('User email:', this.userEmail);
-          }
-        });
+        // this.isLoggedIn$ = this.MyBackendService.isLoggedIn();
+        // this.isLoggedIn$.subscribe(isLoggedIn => {
+        //   if (isLoggedIn) {
+        //     // Fetch userEmail from local storage after the user logs in
+        //     this.userEmail = localStorage.getItem(this.MyBackendService.userEmailKey) || '';
+        //     console.log('User email:', this.userEmail);
+        //   }
+        // });
 
 
   }
@@ -36,9 +35,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(private MyBackendService: MyBackendService) {
     
-    // this.userEmail =
-      // localStorage.getItem(this.MyBackendService.userEmailKey) || '';
-      // console.log(this.userEmail);
+  //   this.userEmail =
+  //     localStorage.getItem(this.MyBackendService.userEmailKey) || '';
+  //     console.log(this.userEmail);
   }
   
 }
