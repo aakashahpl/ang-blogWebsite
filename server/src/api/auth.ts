@@ -8,8 +8,12 @@ interface decodedToken {
 }
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization;
+  console.log(token);
+
   if (!token) {
-    return res.status(401).json({ message: 'Unauthorized: Token missing' });
+    console.log(token);
+
+    return res.status(401).json({ message: "Unauthorized: Token missing" });
   }
   
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
