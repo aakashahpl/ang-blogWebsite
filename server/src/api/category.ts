@@ -37,11 +37,24 @@ Router.post('/save', verifyToken, async (req, res) => {
 Router.get('/fetch',verifyToken, async (req, res) => {
   try {
     const decodedToken:any = req.user;
-    console.log("sdfs");
+    console.log("inside fetch route in category api");
     console.log(decodedToken);
     const userId = decodedToken.user._id;
     const categories = await categoryModel.find({userId:userId});
 
+    return res.status(200).json({ categories });
+  } catch (error) {
+    return res.status(400).json({
+      message: "couldn't fetch categories data",
+    });
+  }
+});
+
+Router.get('/fetch-all', async (req, res) => {
+  try {
+    console.log("inside fetch-all route in category api");
+
+    const categories = await categoryModel.find();
     return res.status(200).json({ categories });
   } catch (error) {
     return res.status(400).json({

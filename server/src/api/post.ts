@@ -58,6 +58,20 @@ Router.get("/fetch", verifyToken, async (req, res) => {
     }
 });
 
+Router.get("/fetch-all", async (req, res) => {
+    try {
+        const posts = await postModel.find();
+        return res.status(200).json({
+            posts,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message: "couldn't fetch posts data",
+            error: error.message,
+        });
+    }
+});
+
 Router.put("/update/:_id",verifyToken,async(req,res)=>{
     try {
         const post = await postModel.findById(req.params._id);
