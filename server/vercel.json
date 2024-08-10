@@ -7,13 +7,7 @@
           "config": { "includeFiles": ["dist/**"] }
       }
   ],
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "destination": "/dist/index.js",
-      "permanent": false
-    }
-  ],
+  "rewrites": [{"source": "/(.*)", "destination": "dist/index.js" }],
   "headers": [
     {
       "source": "/(.*)",
