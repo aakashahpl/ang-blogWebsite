@@ -15,11 +15,15 @@ const passport_1 = __importDefault(require("passport"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+const corsOptions = {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use(passport_1.default.initialize());
 app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '/uploads')));
-app.use((0, cors_1.default)());
 app.use("/", route_1.default);
 app.use("/category", category_1.default);
 app.use("/post/", post_1.default);

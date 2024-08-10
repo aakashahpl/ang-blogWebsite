@@ -52,6 +52,8 @@ Router.post('/login', async (req, res, next) => {
     res.status(500);
     res.json({ error: error.message });
   }
+  
+  // res.json({ accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4" });
 });
 
 Router.get('/logout', (req, res) => {});
