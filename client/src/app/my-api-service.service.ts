@@ -153,6 +153,7 @@ export class MyBackendService {
       .then((response) => {
         if (response.data && response.data.accessToken) {
           this.jwtToken = response.data.accessToken;
+          console.log(this.jwtToken);    
           this.userEmail = formValues.username;
           localStorage.setItem(this.jwtTokenKey, this.jwtToken);
           localStorage.setItem(this.userEmailKey, this.userEmail);

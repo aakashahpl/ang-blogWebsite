@@ -34,7 +34,8 @@
                         <tbody>
                             <tr *ngFor="let post of postArray; let i =index">
                                 <td [width]="10">{{i+1}}</td>
-                                <td [width]="200"></td>
+                                <!-- <div>{{postArray[0].postImgName}}</div> -->
+                                <td [width]="200"><img [src]="'http://localhost:3001/uploads/'+post.postImgName" class="img img-fluid "/></td>
                                 <td [width]="200">{{post.title}}</td>
                                 <!-- <td [width]="200">{{post.excerpt}}</td> -->
                                 <td>{{post.category.category}}</td>
@@ -53,3 +54,4 @@
         </div>
     </div>
 </div>
+
