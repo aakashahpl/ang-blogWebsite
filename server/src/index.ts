@@ -12,9 +12,9 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: 'https://blog-website-chi-ecru.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the methods you want to allow
-};
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  };
 
 app.use(cors(corsOptions));
 
