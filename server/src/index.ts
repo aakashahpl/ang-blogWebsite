@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: 'https://blog-website-pptsk3f0c-aakash-patels-projects.vercel.app',
+  origin: 'https://blog-website-chi-ecru.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add the methods you want to allow
 };
 
