@@ -7,10 +7,16 @@
           "config": { "includeFiles": ["dist/**"] }
       }
   ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "/dist/index.js",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
-       "dest": "dist/index.js",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
