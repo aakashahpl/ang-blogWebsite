@@ -19,6 +19,9 @@ app.use(cors());
 app.use("/",route1);
 app.use("/category",route2);
 app.use("/post/",route3);
+app.get("/test",async(req,res)=>{
+    res.send("api working correctly");
+})
 
 connectToDB();
 const PORT = process.env.PORT||3001;
