@@ -11,12 +11,12 @@ import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 
-const corsOptions = {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  };
+// const corsOptions = {
+//     origin: '*',
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
