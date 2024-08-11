@@ -24,6 +24,7 @@ Router.post('/register', async (req, res) => {
 });
 
 Router.post('/login', async (req, res, next) => {
+
   // try {
   //   const userVariable = new user({
   //     username: req.body.username,
@@ -32,6 +33,7 @@ Router.post('/login', async (req, res, next) => {
   //   passport.authenticate('local', (err, user, info) => {
   //     const { _id, username } = user;
   //     console.log(user);
+
       
   //     //if user is undefined 
   //     if(!_id){

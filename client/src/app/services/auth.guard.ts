@@ -31,7 +31,6 @@ export class AuthGuard implements CanActivate {
   ): boolean {
     if (this.myBackendService.isLoggedInGuard) {
       console.log('Access Granted ...');
-
       return true;
     } else {
       this.toastr.warning("You dont have persmission to view this page ...");

@@ -10,6 +10,8 @@ import { MyBackendService } from 'src/app/my-api-service.service';
 export class HeaderComponent implements OnInit {
   userEmail: string = '';
   isLoggedIn$: Observable<boolean>= new Observable<boolean>();
+
+  //!Fix the issue where clicking the header to navigate to the home page causes logout
   
 
   ngOnInit(): void {

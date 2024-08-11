@@ -56,7 +56,6 @@ export class CategoriesComponent implements OnInit {
   onDelete(id: string) {
     this.MyBackendService.deleteCategoryData(id).subscribe((data) => {
       this.toastr.success('Data deleted');
-
       this.initialFetchData();
     });
   }
