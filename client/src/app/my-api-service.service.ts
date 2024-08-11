@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class MyBackendService {
-  private categorybackendUrl = 'http://localhost:3001/category';
-  private postBackendUrl = 'http://localhost:3001/post';
-  private loginurl = 'http://localhost:3001/login';
+  private categorybackendUrl = 'https://ang-blog-website.vercel.app/category';
+  private postBackendUrl = 'https://ang-blog-website.vercel.app/post';
+  private loginurl = 'https://ang-blog-website.vercel.app/login';
   private jwtTokenKey = 'jwtToken';
   private jwtToken: string = '';
   userEmailKey: string = 'userEmail';
