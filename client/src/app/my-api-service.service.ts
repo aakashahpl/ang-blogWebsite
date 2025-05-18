@@ -2,24 +2,30 @@ import { Injectable } from '@angular/core';
 import axios, { AxiosRequestConfig } from 'axios';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MyBackendService {
-  private categorybackendUrl = 'https://ang-blog-website.vercel.app/category';
-  private postBackendUrl = 'https://ang-blog-website.vercel.app/post';
-  private loginurl = 'https://ang-blog-website.vercel.app/login';
-  private jwtTokenKey = 'jwtToken';
+  private categorybackendUrl = `${environment.Backend_URL}/category`;
+  private postBackendUrl = `${environment.Backend_URL}/post`;
+  private loginurl = `${environment.Backend_URL}/login`;
+  private jwtTokenKey = 'this_is_secret';
   private jwtToken: string = '';
   userEmailKey: string = 'userEmail';
   private userEmail: string = '';
+  
+  // Initialize loggedIn status based on whether a JWT token exists in localStorage
   loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isLoggedInGuard:boolean=false;
-  // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4
+  
   constructor(private router: Router) {
     this.jwtToken = localStorage.getItem(this.jwtTokenKey) || '';
     this.userEmail = localStorage.getItem(this.userEmailKey) || '';
+    
+    // Initialize the loggedIn state based on whether a valid token exists
+    const hasToken = !!this.jwtToken;
+    this.loggedIn.next(hasToken);
   }
 
   getCategoryData(): Observable<any> {
@@ -153,13 +159,11 @@ export class MyBackendService {
       .then((response) => {
         if (response.data && response.data.accessToken) {
           this.jwtToken = response.data.accessToken;
-          console.log(this.jwtToken);    
           this.userEmail = formValues.username;
           localStorage.setItem(this.jwtTokenKey, this.jwtToken);
           localStorage.setItem(this.userEmailKey, this.userEmail);
           this.loggedIn.next(true);
-          this.isLoggedInGuard=true;
-           this.router.navigate(['/']);
+          this.router.navigate(['/']);
         }
       })
       .catch((error) => {
@@ -168,19 +172,23 @@ export class MyBackendService {
   }
 
   logout() {
-    // !Clear the token from localStorage when the user logs out
+    // Clear the token from localStorage when the user logs out
     this.jwtToken = '';
     this.userEmail = '';
     localStorage.removeItem(this.jwtTokenKey);
     localStorage.removeItem(this.userEmailKey);
-    this.router.navigate(['/login']);
     this.loggedIn.next(false);
-    this.isLoggedInGuard=false;
+    this.router.navigate(['/login']);
   }
 
-  isLoggedIn() {
-    return this.loggedIn.asObservable();
+  // Return if the user is currently logged in
+  isLoggedIn(): boolean {
+    return this.loggedIn.getValue();
+  }
 
+  // Get the observable for tracking login state changes
+  getLoggedInStatus(): Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
 
   // Utility function to get headers with JWT token
@@ -207,6 +215,24 @@ export class MyBackendService {
     return headers;
   }
 
-  //!complete the function below to toggle the featured status of a post
-  markFeatued(id: string, featuredData: boolean) {}
+  // Toggle the featured status of a post
+  markFeatued(id: string, featuredData: boolean): Observable<any> {
+    const axiosConfig: AxiosRequestConfig = {
+      method: 'patch',
+      url: `${this.postBackendUrl}/feature/${id}`,
+      data: { featured: featuredData },
+      headers: this.getHeaders(),
+    };
+
+    return new Observable((observer) => {
+      axios(axiosConfig)
+        .then((response) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
+  }
 }

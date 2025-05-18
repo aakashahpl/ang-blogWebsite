@@ -15,7 +15,9 @@ const verifyToken = (req, res, next) => {
 
     return res.status(401).json({ message: "Unauthorized: Token missing" });
   }
-  
+  if(!process.env.ACCESS_TOKEN_SECRET){
+    console.log(" Secret token missing in .env file");
+  }
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: 'Unauthorized: Invalid token' });

@@ -1,10 +1,3 @@
-// import { CanActivateFn } from '@angular/router';
-// import { MyBackendService } from '../my-api-service.service';
-
-// export const authGuard: CanActivateFn = (route, state) => {
-//   return MyBackendService.isLoggedInGuard;
-// };
-
 import {
   CanActivate,
   ActivatedRouteSnapshot,
@@ -29,11 +22,12 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (this.myBackendService.isLoggedInGuard) {
+    // Use the isLoggedIn() method that returns the current boolean value
+    if (this.myBackendService.isLoggedIn()) {
       console.log('Access Granted ...');
       return true;
     } else {
-      this.toastr.warning("You dont have persmission to view this page ...");
+      this.toastr.warning("You don't have permission to view this page ...");
       this.router.navigate(['/login']);
       return false;
     }

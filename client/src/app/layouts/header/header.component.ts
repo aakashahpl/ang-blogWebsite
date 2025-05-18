@@ -16,8 +16,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userEmail=localStorage.getItem(this.MyBackendService.userEmailKey) || '';
-    this.isLoggedIn$ = this.MyBackendService.isLoggedIn();
-
+    this.isLoggedIn$ = this.MyBackendService.getLoggedInStatus();
         // Fetch userEmail from local storage
         // this.isLoggedIn$ = this.MyBackendService.isLoggedIn();
         // this.isLoggedIn$.subscribe(isLoggedIn => {
