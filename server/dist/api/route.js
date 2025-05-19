@@ -24,33 +24,32 @@ Router.post('/register', async (req, res) => {
     }
 });
 Router.post('/login', async (req, res, next) => {
-    // try {
-    //   const userVariable = new user({
-    //     username: req.body.username,
-    //     password: req.body.password,
-    //   });
-    //   passport.authenticate('local', (err, user, info) => {
-    //     const { _id, username } = user;
-    //     console.log(user);
-    //     //if user is undefined 
-    //     if(!_id){
-    //       res.status(400).json({message:"incorrect username or password"});
-    //     }
-    //     else{
-    //     console.log(_id);
-    //     const accessToken = jwt.sign(
-    //       { user: {_id,username} },
-    //       process.env.ACCESS_TOKEN_SECRET
-    //     );
-    //     res.json({ accessToken: accessToken });
-    //     } 
-    //   })(req, (res));
-    // } catch (error: any) {
-    //   console.log(`unable to login : ${error.message}`);
-    //   res.status(500);
-    //   res.json({ error: error.message });
-    // }
-    res.json({ accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4" });
+    try {
+        const userVariable = new user_1.default({
+            username: req.body.username,
+            password: req.body.password,
+        });
+        console.log(userVariable);
+        passport_1.default.authenticate('local', (err, user, info) => {
+            const { _id, username } = user;
+            console.log(user);
+            //if user is undefined 
+            if (!_id) {
+                res.status(400).json({ message: "incorrect username or password" });
+            }
+            else {
+                console.log(_id);
+                const accessToken = jsonwebtoken_1.default.sign({ user: { _id, username } }, process.env.ACCESS_TOKEN_SECRET);
+                res.json({ accessToken: accessToken });
+            }
+        })(req, (res));
+    }
+    catch (error) {
+        console.log(`unable to login : ${error.message}`);
+        res.status(500);
+        res.json({ error: error.message });
+    }
+    // res.json({ accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY1OWVlMTY1ZGNkM2ZkZDJiZTlkY2MwZiIsInVzZXJuYW1lIjoiaGFycnkifSwiaWF0IjoxNzA1MDcyNjg3fQ.XAl6lfQfGl8wuqmfUfTdZp-JtkTcpPmUB5Eyu0IVBO4" });
 });
 Router.get('/logout', (req, res) => { });
 exports.default = Router;

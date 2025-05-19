@@ -14,6 +14,7 @@ const app = express();
 const corsOptions = {
     origin: 'https://blog-website-chi-ecru.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   };
 
 app.use(cors(corsOptions));

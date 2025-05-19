@@ -9,16 +9,18 @@ const db_1 = __importDefault(require("./db"));
 const route_1 = __importDefault(require("./api/route"));
 const category_1 = __importDefault(require("./api/category"));
 const post_1 = __importDefault(require("./api/post"));
+const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const passport_1 = __importDefault(require("passport"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-// const corsOptions = {
-//     origin: '*',
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   };
-// app.use(cors(corsOptions));
+const corsOptions = {
+    origin: 'https://blog-website-chi-ecru.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use(passport_1.default.initialize());
